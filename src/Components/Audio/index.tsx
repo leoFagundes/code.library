@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import AudioContainer from "./style";
+import * as S from "./style";
 import ReactAudioPlayer from "react-audio-player";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,14 +7,23 @@ import {
   faPause,
   faForwardStep,
   faBackwardStep,
+  faCaretUp,
 } from "@fortawesome/free-solid-svg-icons";
-import data from "./data";
+import { DataType } from "../../Types/types";
 
-const Audio = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+type AudioProps = {
+  data: DataType[];
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Audio = ({ data, isPlaying, setIsPlaying }: AudioProps) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentVolume, setCurrentVolume] = useState(0.1);
+  const [isControlsVisible, setIsControlsVisible] = useState(true);
+  const [isControlsManageAlreadyClicked, setIsControlsManageAlreadyClicked] =
+    useState(false);
   const audioRef = useRef<ReactAudioPlayer>(null);
 
   useEffect(() => {
@@ -89,8 +98,21 @@ const Audio = () => {
     }
   };
 
+  const handleControlManage = () => {
+    setIsControlsManageAlreadyClicked(true);
+    setIsControlsVisible(!isControlsVisible);
+  };
+
   return (
-    <AudioContainer>
+    <S.AudioContainer
+      className={
+        isControlsManageAlreadyClicked
+          ? isControlsVisible
+            ? "height-controls-visible"
+            : "height-controls-invisible"
+          : undefined
+      }
+    >
       <div className="display-buttons">
         <button className="btn" onClick={playPreviousTrack}>
           <FontAwesomeIcon size="sm" color="white" icon={faBackwardStep} />
@@ -111,22 +133,45 @@ const Audio = () => {
           <FontAwesomeIcon size="sm" color="white" icon={faForwardStep} />
         </button>
       </div>
-      <ReactAudioPlayer
-        ref={audioRef}
-        src={`assets/music/${data[currentTrackIndex].fileName}`}
-        volume={currentVolume}
-        controls
-        loop={false}
-        autoPlay
-        onEnded={onEnded}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        listenInterval={1000}
-        onListen={handleListen}
-        onVolumeChanged={handleVolume}
+      <div
+        className={`audio-container ${
+          isControlsManageAlreadyClicked
+            ? isControlsVisible
+              ? "controls-down"
+              : "controls-up"
+            : undefined
+        }`}
+      >
+        <ReactAudioPlayer
+          ref={audioRef}
+          src={`assets/music/${data[currentTrackIndex].fileName}`}
+          volume={currentVolume}
+          controls
+          loop={false}
+          autoPlay
+          onEnded={onEnded}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          listenInterval={1000}
+          onListen={handleListen}
+          onVolumeChanged={handleVolume}
+        />
+      </div>
+      <p className="current-track">{data[currentTrackIndex].name}</p>
+      <FontAwesomeIcon
+        className={`controls-manage-icon ${
+          isControlsManageAlreadyClicked
+            ? isControlsVisible
+              ? "controls-visible"
+              : "controls-invisible"
+            : undefined
+        }`}
+        size="lg"
+        color="white"
+        icon={faCaretUp}
+        onClick={handleControlManage}
       />
-      <p>{data[currentTrackIndex].name}</p>
-    </AudioContainer>
+    </S.AudioContainer>
   );
 };
 

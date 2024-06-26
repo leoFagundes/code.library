@@ -1,1 +1,4 @@
-import React from "react";
+export type DataType = {
+  fileName: string;
+  name: string;
+};

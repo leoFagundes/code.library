@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
   -moz-osx-font-smoothing: grayscale;
   background-color: ${({ theme }) => theme.primaryColor};
   color: ${({ theme }) => theme.textColor};
+  -webkit-tap-highlight-color: transparent;
 }
 
 code {
