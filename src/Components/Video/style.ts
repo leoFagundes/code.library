@@ -5,6 +5,11 @@ export const VideoContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  transition: 1s;
+
+  &.isPaused {
+    filter: grayscale(60%) brightness(90%);
+  }
 
   video {
     border-radius: 20px;

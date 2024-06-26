@@ -10,18 +10,27 @@ import {
   faCaretUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { DataType } from "../../Types/types";
+import { useScreenWidth } from "../../Hooks/useScreenWidth";
 
 type AudioProps = {
   data: DataType[];
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  grayScale?: boolean;
+  setGrayScale?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Audio = ({ data, isPlaying, setIsPlaying }: AudioProps) => {
+const Audio = ({
+  data,
+  isPlaying,
+  setIsPlaying,
+  grayScale = false,
+  setGrayScale = () => {},
+}: AudioProps) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentVolume, setCurrentVolume] = useState(0.1);
-  const [isControlsVisible, setIsControlsVisible] = useState(true);
+  const [isControlsVisible, setIsControlsVisible] = useState(false);
   const [isControlsManageAlreadyClicked, setIsControlsManageAlreadyClicked] =
     useState(false);
   const audioRef = useRef<ReactAudioPlayer>(null);
@@ -29,30 +38,34 @@ const Audio = ({ data, isPlaying, setIsPlaying }: AudioProps) => {
   useEffect(() => {
     const interval = setInterval(() => {
       localStorage.setItem(
-        "audioState",
-        JSON.stringify({ currentTrackIndex, currentTime })
+        "audioConfigs",
+        JSON.stringify({ currentTrackIndex, currentTime, grayScale })
       );
     }, 900);
 
     return () => clearInterval(interval);
-  }, [currentTrackIndex, currentTime]);
+  }, [currentTrackIndex, currentTime, grayScale]);
 
   useEffect(() => {
-    const savedState = localStorage.getItem("audioState");
-    if (savedState) {
-      const { currentTrackIndex: savedIndex, currentTime: savedTime } =
-        JSON.parse(savedState);
+    const audioConfigs = localStorage.getItem("audioConfigs");
+    if (audioConfigs) {
+      const {
+        currentTrackIndex: savedIndex,
+        currentTime: savedTime,
+        grayScale: savedGrayScale,
+      } = JSON.parse(audioConfigs);
       setCurrentTrackIndex(savedIndex);
       setCurrentTime(savedTime);
+      setGrayScale(savedGrayScale);
     }
 
     setStartTimeFromLocalStorage();
   }, []);
 
   const setStartTimeFromLocalStorage = () => {
-    const savedState = localStorage.getItem("audioState");
-    if (savedState) {
-      const { currentTime: savedTime } = JSON.parse(savedState);
+    const audioConfigs = localStorage.getItem("audioConfigs");
+    if (audioConfigs) {
+      const { currentTime: savedTime } = JSON.parse(audioConfigs);
       setCurrentTime(savedTime);
       if (audioRef.current && audioRef.current.audioEl.current) {
         audioRef.current.audioEl.current.currentTime = savedTime;
@@ -103,8 +116,15 @@ const Audio = ({ data, isPlaying, setIsPlaying }: AudioProps) => {
     setIsControlsVisible(!isControlsVisible);
   };
 
+  const handleCheckedgrayScale = () => {
+    setGrayScale(!grayScale);
+  };
+
+  const { isSmallScreen } = useScreenWidth();
+
   return (
     <S.AudioContainer
+      isSmallScreen={isSmallScreen}
       className={
         isControlsManageAlreadyClicked
           ? isControlsVisible
@@ -124,7 +144,12 @@ const Audio = ({ data, isPlaying, setIsPlaying }: AudioProps) => {
             {isPlaying ? (
               <FontAwesomeIcon size="lg" color="white" icon={faPause} />
             ) : (
-              <FontAwesomeIcon size="lg" color="white" icon={faPlay} />
+              <FontAwesomeIcon
+                style={{ transform: "translateX(1px)" }}
+                size="lg"
+                color="white"
+                icon={faPlay}
+              />
             )}
           </button>
         </div>
@@ -156,6 +181,19 @@ const Audio = ({ data, isPlaying, setIsPlaying }: AudioProps) => {
           onListen={handleListen}
           onVolumeChanged={handleVolume}
         />
+
+        <div className="checkbox-caption">
+          <input
+            type="checkbox"
+            onChange={handleCheckedgrayScale}
+            checked={grayScale}
+            name="checkBoxGrayScale"
+            id="checkBoxGrayScale"
+          />
+          <label className="checkbox-label" htmlFor="checkBoxGrayScale">
+            Gray when paused
+          </label>
+        </div>
       </div>
       <p className="current-track">{data[currentTrackIndex].name}</p>
       <FontAwesomeIcon

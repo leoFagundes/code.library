@@ -4,28 +4,35 @@ import lofiAudioData from "../../Utils/lofiAudioData";
 import { useEffect, useState } from "react";
 import Video from "../../Components/Video";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
+import Line from "../../Components/Line";
 
 const Home = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const screenWidth = useScreenWidth();
+  const [isGrayScaleWhenPaused, setIsGrayScaleWhenPaused] = useState(() => {
+    const audioConfigs = localStorage.getItem("audioConfigs");
 
-  useEffect(() => {
-    if (screenWidth < 600) {
-      setIsSmallScreen(true);
-    } else {
-      setIsSmallScreen(false);
+    if (audioConfigs) {
+      const { grayScale: savedGrayScale } = JSON.parse(audioConfigs);
+      return savedGrayScale;
     }
-  }, [screenWidth]);
+
+    return false;
+  });
+  const { isSmallScreen } = useScreenWidth();
 
   return (
     <S.mainContainer>
-      {isSmallScreen ? <h2>Library.Code</h2> : <Video isPlaying={isPlaying} />}
-      {/**<img src="assets/images/mainProgrammerImg.png" alt="programmerImage" /> */}
+      {isSmallScreen ? (
+        <h2>Code.Library</h2>
+      ) : (
+        <Video isPlaying={isPlaying} grayScale={isGrayScaleWhenPaused} />
+      )}
       <Audio
         data={lofiAudioData}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
+        grayScale={isGrayScaleWhenPaused}
+        setGrayScale={setIsGrayScaleWhenPaused}
       />
     </S.mainContainer>
   );

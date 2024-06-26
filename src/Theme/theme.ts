@@ -5,6 +5,7 @@ type ThemeType = {
   quaternaryColor: string;
   textColor: string;
   mainWhite: string;
+  mainBlack: string;
 };
 
 const theme: ThemeType = {
@@ -14,6 +15,7 @@ const theme: ThemeType = {
   quaternaryColor: "#748D92",
   textColor: "#D3D9D4",
   mainWhite: "#F9F9F9",
+  mainBlack: "#222326",
 };
 
 export default theme;

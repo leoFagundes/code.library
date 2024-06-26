@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AudioContainer = styled.div`
+export const AudioContainer = styled.div<{ isSmallScreen: boolean }>`
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
   display: flex;
@@ -8,12 +8,17 @@ export const AudioContainer = styled.div`
   align-items: center;
   position: relative;
   gap: 5px;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px 5px;
   border-radius: 5px;
   box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.25);
   min-width: 300px;
-  height: 88px;
+  height: 40px;
+  ${(props) =>
+    props.isSmallScreen &&
+    `
+    filter: drop-shadow(0px 4px 100px ${props.theme.tertiaryColor});
+  `}
 
   &.height-controls-visible {
     animation: heightDown 0.2s ease-in-out forwards;
@@ -38,6 +43,7 @@ export const AudioContainer = styled.div`
     top: 5px;
     right: 10px;
     z-index: 2;
+    transform: rotate(180deg);
 
     &.controls-visible {
       animation: rotateUp 0.3s ease-in-out forwards;
@@ -93,7 +99,7 @@ export const AudioContainer = styled.div`
       align-items: center;
       height: 30px;
       width: 30px;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(150px);
       border: none;
       padding: 10px;
@@ -112,6 +118,29 @@ export const AudioContainer = styled.div`
   }
 
   .audio-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transform: translateY(-45px);
+    gap: 5px;
+    opacity: 0;
+
+    .checkbox-caption {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .checkbox-label {
+        font-size: 12px;
+      }
+
+      input:hover,
+      label:hover {
+        cursor: pointer;
+      }
+    }
+
     &.controls-down {
       animation: scrollDown 0.3s ease-in-out forwards,
         spawnControls 0.3s ease-in-out forwards;
@@ -119,6 +148,7 @@ export const AudioContainer = styled.div`
     &.controls-up {
       animation: scrollUp 0.3s ease-in-out forwards,
         hiddenControls 0.3s ease-in-out forwards;
+      pointer-events: none;
     }
     audio {
       height: 40px;
@@ -238,7 +268,7 @@ export const AudioContainer = styled.div`
 
   @keyframes heightUp {
     from {
-      height: 88px;
+      height: 105px;
     }
     to {
       height: 40px;
@@ -250,7 +280,7 @@ export const AudioContainer = styled.div`
       height: 40px;
     }
     to {
-      height: 88px;
+      height: 105px;
     }
   }
 

@@ -3,11 +3,14 @@ import ReactPlayer from "react-player";
 
 type VideoProps = {
   isPlaying: boolean;
+  grayScale?: boolean;
 };
 
-const Video = ({ isPlaying }: VideoProps) => {
+const Video = ({ isPlaying, grayScale = true }: VideoProps) => {
   return (
-    <S.VideoContainer>
+    <S.VideoContainer
+      className={grayScale ? (!isPlaying ? "isPaused" : undefined) : undefined}
+    >
       <ReactPlayer
         url="assets/videos/lofiVideo.mp4"
         controls={false}

@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 
 export const useScreenWidth = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    if (screenWidth < 600) {
+      setIsSmallScreen(true);
+    } else {
+      setIsSmallScreen(false);
+    }
+  }, [screenWidth]);
 
   const handleWindowSizeChange = () => {
     setScreenWidth(window.innerWidth);
@@ -14,5 +23,5 @@ export const useScreenWidth = () => {
     };
   }, []);
 
-  return screenWidth;
+  return { screenWidth, isSmallScreen };
 };
