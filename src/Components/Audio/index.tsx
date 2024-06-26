@@ -14,6 +14,7 @@ const Audio = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [currentVolume, setCurrentVolume] = useState(0.1);
   const audioRef = useRef<ReactAudioPlayer>(null);
 
   useEffect(() => {
@@ -82,6 +83,12 @@ const Audio = () => {
     setCurrentTime(currentTime);
   };
 
+  const handleVolume = () => {
+    if (audioRef.current && audioRef.current.audioEl.current) {
+      setCurrentVolume(audioRef.current.audioEl.current.volume);
+    }
+  };
+
   return (
     <AudioContainer>
       <div className="display-buttons">
@@ -90,7 +97,7 @@ const Audio = () => {
         </button>
 
         <div className="play-btn-container">
-          {isPlaying && <div className="spinner" />}
+          <div className={`spinner ${!isPlaying && "spinner-hidden"}`} />
           <button className="btn play-btn" onClick={togglePlay}>
             {isPlaying ? (
               <FontAwesomeIcon size="lg" color="white" icon={faPause} />
@@ -107,7 +114,7 @@ const Audio = () => {
       <ReactAudioPlayer
         ref={audioRef}
         src={`assets/music/${data[currentTrackIndex].fileName}`}
-        volume={0.1}
+        volume={currentVolume}
         controls
         loop={false}
         autoPlay
@@ -116,6 +123,7 @@ const Audio = () => {
         onPause={() => setIsPlaying(false)}
         listenInterval={1000}
         onListen={handleListen}
+        onVolumeChanged={handleVolume}
       />
       <p>{data[currentTrackIndex].name}</p>
     </AudioContainer>

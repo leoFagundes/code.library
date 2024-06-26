@@ -10,6 +10,7 @@ const AudioContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.25);
   padding: 15px 5px;
   border-radius: 5px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
 
   p {
     font-size: 10px;
@@ -22,6 +23,9 @@ const AudioContainer = styled.div`
     gap: 10px;
 
     .play-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: relative;
 
       .spinner {
@@ -38,6 +42,10 @@ const AudioContainer = styled.div`
         );
         box-shadow: 0 0 10px rgba(186, 66, 255, 0.5),
           0 0 10px rgba(0, 225, 255, 0.5);
+      }
+
+      .spinner-hidden {
+        animation: hidden 1s ease-in-out forwards;
       }
     }
 
@@ -111,34 +119,27 @@ const AudioContainer = styled.div`
     }
   }
 
+  @keyframes hidden {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
   @keyframes colorChange {
     0% {
-      background: linear-gradient(
-        45deg,
-        rgba(186, 66, 255, 1) 0%,
-        rgba(0, 225, 255, 1) 100%
-      );
+      box-shadow: 0 0 10px rgba(186, 66, 255, 0.5),
+        0 0 10px rgba(0, 225, 255, 0.5);
     }
-    33% {
-      background: linear-gradient(
-        45deg,
-        rgba(0, 225, 255, 1) 0%,
-        rgba(0, 255, 0, 1) 100%
-      );
-    }
-    66% {
-      background: linear-gradient(
-        45deg,
-        rgba(0, 255, 0, 1) 0%,
-        rgba(186, 66, 255, 1) 100%
-      );
+    50% {
+      box-shadow: 0 0 10px rgba(0, 230, 150, 0.5),
+        0 0 10px rgba(0, 200, 235, 0.5);
     }
     100% {
-      background: linear-gradient(
-        45deg,
-        rgba(186, 66, 255, 1) 0%,
-        rgba(0, 225, 255, 1) 100%
-      );
+      box-shadow: 0 0 10px rgba(186, 66, 255, 0.5),
+        0 0 10px rgba(0, 225, 255, 0.5);
     }
   }
 `;
