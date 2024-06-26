@@ -1,14 +1,15 @@
-import { styled } from "styled-components";
-
-const Div = styled.div`
-  background-color: ${(props) => props.theme.colors.primary};
-`;
+import { useEffect, useState } from "react";
+import * as S from "./style";
+import Audio from "../Components/Audio";
 
 const Home = () => {
+  const [mp3FileNames, setMp3FileNames] = useState([]);
+
   return (
-    <div>
-      <Div>teste</Div>
-    </div>
+    <S.mainContainer>
+      <img src="assets/images/mainProgrammerImg.png" alt="programmerImage" />
+      <Audio />
+    </S.mainContainer>
   );
 };
 
