@@ -4,6 +4,12 @@ const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+  *::selection {
+    color: ${({ theme }) => theme.mainWhite};
+    background-color: rgba(48, 94, 131, 0.5);
+    //text-decoration: underline;
+  }
+
   body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -27,10 +33,15 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-p, label, span {
+p, label, span, li {
   font-family: "Space Mono", monospace;
   padding: 0;
   margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: ${({ theme }) => theme.textColor};
 }
 `;
 

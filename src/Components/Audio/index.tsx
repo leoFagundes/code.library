@@ -124,7 +124,7 @@ const Audio = ({
 
   return (
     <S.AudioContainer
-      isSmallScreen={isSmallScreen}
+      issmallscreen={isSmallScreen ? "true" : "false"}
       className={
         isControlsManageAlreadyClicked
           ? isControlsVisible

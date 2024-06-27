@@ -6,6 +6,7 @@ type ThemeType = {
   textColor: string;
   mainWhite: string;
   mainBlack: string;
+  pageTopPadding: string;
 };
 
 const theme: ThemeType = {
@@ -16,6 +17,7 @@ const theme: ThemeType = {
   textColor: "#D3D9D4",
   mainWhite: "#F9F9F9",
   mainBlack: "#222326",
+  pageTopPadding: "70px",
 };
 
 export default theme;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AudioContainer = styled.div<{ isSmallScreen: boolean }>`
+export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
   display: flex;
@@ -15,7 +15,7 @@ export const AudioContainer = styled.div<{ isSmallScreen: boolean }>`
   min-width: 300px;
   height: 40px;
   ${(props) =>
-    props.isSmallScreen &&
+    props.issmallscreen === "true" &&
     `
     filter: drop-shadow(0px 4px 100px ${props.theme.tertiaryColor});
   `}

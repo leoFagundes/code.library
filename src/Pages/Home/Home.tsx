@@ -1,10 +1,9 @@
 import * as S from "./style";
 import Audio from "../../Components/Audio";
 import lofiAudioData from "../../Utils/lofiAudioData";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Video from "../../Components/Video";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
-import Line from "../../Components/Line";
 
 const Home = () => {
   const [isPlaying, setIsPlaying] = useState(false);
