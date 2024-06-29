@@ -25,6 +25,7 @@ const Line = ({
 }: LineProps) => {
   return (
     <S.LineContainer
+      data-testid="lineElement"
       color={color}
       margintop={margintop}
       marginbottom={marginbottom}

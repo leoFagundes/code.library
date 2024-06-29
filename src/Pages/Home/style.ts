@@ -9,7 +9,6 @@ export const mainContainer = styled.main`
   gap: 10px;
   height: 100vh;
   width: 100vw;
-  box-shadow: inset 0 4px 248px 260px rgba(0, 0, 0, 0.25);
   padding-top: ${({ theme }) => theme.pageTopPadding};
   box-sizing: border-box;
 

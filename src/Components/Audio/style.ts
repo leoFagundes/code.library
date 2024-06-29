@@ -1,31 +1,39 @@
 import styled from "styled-components";
 
 export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
-  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   gap: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
   padding: 10px 5px;
   border-radius: 5px;
-  box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.25);
   min-width: 300px;
   height: 40px;
+  transition: 1s;
   ${(props) =>
     props.issmallscreen === "true" &&
     `
     filter: drop-shadow(0px 4px 100px ${props.theme.tertiaryColor});
   `}
 
+  &.isPaused {
+    filter: grayscale(60%) brightness(90%);
+  }
+
   &.height-controls-visible {
-    animation: heightDown 0.2s ease-in-out forwards;
+    animation: ${(props) =>
+        props.issmallscreen === "true" ? "heightDownSmall" : "heightDownLarge"}
+      0.2s ease-in-out forwards;
   }
 
   &.height-controls-invisible {
-    animation: heightUp 0.2s ease-in-out forwards;
+    animation: ${(props) =>
+        props.issmallscreen === "true" ? "heightUpSmall" : "heightUpLarge"}
+      0.2s ease-in-out forwards;
   }
 
   p {
@@ -74,18 +82,30 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
 
       .spinner {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 42px;
+        height: 42px;
+        background: transparent;
+        border: 2px solid rgba(0, 102, 255, 0.1);
         border-radius: 50%;
-        animation: spinning 1.7s linear infinite, colorChange 5s linear infinite,
-          spawn 1s ease-in-out;
-        background: linear-gradient(
-          45deg,
-          rgba(186, 66, 255, 1) 0%,
-          rgba(0, 225, 255, 1) 100%
-        );
-        box-shadow: 0 0 10px rgba(186, 66, 255, 0.5),
-          0 0 10px rgba(0, 225, 255, 0.5);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+        animation: spawn 1s ease-in-out forwards;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          width: 100%;
+          height: 100%;
+          border: 1px solid transparent;
+          border-top: 1px solid ${({ theme }) => theme.tertiaryColor};
+          border-right: 2px solid ${({ theme }) => theme.tertiaryColor};
+          border-radius: 50%;
+          animation: animateC 2s linear infinite;
+        }
       }
 
       .spinner-hidden {
@@ -99,7 +119,7 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
       align-items: center;
       height: 30px;
       width: 30px;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(6, 6, 6, 0.5);
       backdrop-filter: blur(150px);
       border: none;
       padding: 10px;
@@ -130,6 +150,7 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 5px;
 
       .checkbox-label {
         font-size: 12px;
@@ -266,7 +287,7 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
     }
   }
 
-  @keyframes heightUp {
+  @keyframes heightUpLarge {
     from {
       height: 105px;
     }
@@ -275,7 +296,7 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
     }
   }
 
-  @keyframes heightDown {
+  @keyframes heightDownLarge {
     from {
       height: 40px;
     }
@@ -284,18 +305,41 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
     }
   }
 
-  @keyframes colorChange {
+  @keyframes heightUpSmall {
+    from {
+      height: 88px;
+    }
+    to {
+      height: 40px;
+    }
+  }
+
+  @keyframes heightDownSmall {
+    from {
+      height: 40px;
+    }
+    to {
+      height: 88px;
+    }
+  }
+
+  @keyframes animateC {
     0% {
-      box-shadow: 0 0 10px rgba(186, 66, 255, 0.5),
-        0 0 10px rgba(0, 225, 255, 0.5);
+      transform: rotate(0deg);
     }
-    50% {
-      box-shadow: 0 0 10px rgba(0, 230, 150, 0.5),
-        0 0 10px rgba(0, 200, 235, 0.5);
-    }
+
     100% {
-      box-shadow: 0 0 10px rgba(186, 66, 255, 0.5),
-        0 0 10px rgba(0, 225, 255, 0.5);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes animate {
+    0% {
+      transform: rotate(45deg);
+    }
+
+    100% {
+      transform: rotate(405deg);
     }
   }
 `;

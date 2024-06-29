@@ -10,7 +10,7 @@ type ThemeType = {
 };
 
 const theme: ThemeType = {
-  primaryColor: "#212A31",
+  primaryColor: "#19212c",
   secondaryColor: "#2E3944",
   tertiaryColor: "#124E66",
   quaternaryColor: "#748D92",

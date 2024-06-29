@@ -6,7 +6,7 @@ import Video from "../../Components/Video";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
 
 const Home = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isGrayScaleWhenPaused, setIsGrayScaleWhenPaused] = useState(() => {
     const audioConfigs = localStorage.getItem("audioConfigs");
 

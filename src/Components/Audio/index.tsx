@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { DataType } from "../../Types/types";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
+import Checkbox from "../Checkbox";
 
 type AudioProps = {
   data: DataType[];
@@ -39,12 +40,18 @@ const Audio = ({
     const interval = setInterval(() => {
       localStorage.setItem(
         "audioConfigs",
-        JSON.stringify({ currentTrackIndex, currentTime, grayScale })
+        JSON.stringify({
+          currentTrackIndex,
+          currentTime,
+          currentVolume,
+          grayScale,
+          isPlaying,
+        })
       );
     }, 900);
 
     return () => clearInterval(interval);
-  }, [currentTrackIndex, currentTime, grayScale]);
+  }, [currentTrackIndex, currentTime, currentVolume, grayScale, isPlaying]);
 
   useEffect(() => {
     const audioConfigs = localStorage.getItem("audioConfigs");
@@ -52,15 +59,19 @@ const Audio = ({
       const {
         currentTrackIndex: savedIndex,
         currentTime: savedTime,
+        currentVolume: savedCurrentVolume,
         grayScale: savedGrayScale,
+        isPlaying: savedIsPlaying,
       } = JSON.parse(audioConfigs);
       setCurrentTrackIndex(savedIndex);
       setCurrentTime(savedTime);
       setGrayScale(savedGrayScale);
+      setIsPlaying(savedIsPlaying);
+      setCurrentVolume(savedCurrentVolume);
     }
 
     setStartTimeFromLocalStorage();
-  }, []);
+  }, [setGrayScale, setIsPlaying]);
 
   const setStartTimeFromLocalStorage = () => {
     const audioConfigs = localStorage.getItem("audioConfigs");
@@ -87,14 +98,14 @@ const Audio = ({
 
   const playNextTrack = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % data.length);
-    setIsPlaying(false);
+    setIsPlaying(true);
   };
 
   const playPreviousTrack = () => {
     setCurrentTrackIndex(
       (prevIndex) => (prevIndex - 1 + data.length) % data.length
     );
-    setIsPlaying(false);
+    setIsPlaying(true);
   };
 
   const onEnded = () => {
@@ -125,13 +136,13 @@ const Audio = ({
   return (
     <S.AudioContainer
       issmallscreen={isSmallScreen ? "true" : "false"}
-      className={
+      className={`${
         isControlsManageAlreadyClicked
           ? isControlsVisible
             ? "height-controls-visible"
             : "height-controls-invisible"
           : undefined
-      }
+      } ${grayScale ? (!isPlaying ? "isPaused" : undefined) : undefined}`}
     >
       <div className="display-buttons">
         <button className="btn" onClick={playPreviousTrack}>
@@ -172,8 +183,8 @@ const Audio = ({
           src={`assets/music/${data[currentTrackIndex].fileName}`}
           volume={currentVolume}
           controls
+          autoPlay={isPlaying}
           loop={false}
-          autoPlay
           onEnded={onEnded}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
@@ -182,18 +193,14 @@ const Audio = ({
           onVolumeChanged={handleVolume}
         />
 
-        <div className="checkbox-caption">
-          <input
-            type="checkbox"
-            onChange={handleCheckedgrayScale}
-            checked={grayScale}
-            name="checkBoxGrayScale"
-            id="checkBoxGrayScale"
-          />
-          <label className="checkbox-label" htmlFor="checkBoxGrayScale">
-            Gray when paused
-          </label>
-        </div>
+        {!isSmallScreen && (
+          <div className="checkbox-caption">
+            <Checkbox onChange={handleCheckedgrayScale} checked={grayScale} />
+            <label className="checkbox-label" htmlFor="checkBoxGrayScale">
+              Gray when paused
+            </label>
+          </div>
+        )}
       </div>
       <p className="current-track">{data[currentTrackIndex].name}</p>
       <FontAwesomeIcon
