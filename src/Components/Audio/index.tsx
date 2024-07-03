@@ -12,24 +12,14 @@ import {
 import { MediaDataType } from "../../Types/types";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
 import Checkbox from "../Checkbox";
+import { useAudioContext } from "../../Contexts/AudiotContext";
 
 type AudioProps = {
   data: MediaDataType[];
-  isPlaying: boolean;
-  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-  grayScale?: boolean;
-  setGrayScale?: React.Dispatch<React.SetStateAction<boolean>>;
   controls?: boolean;
 };
 
-const Audio = ({
-  data,
-  isPlaying,
-  setIsPlaying,
-  grayScale = false,
-  setGrayScale = () => {},
-  controls = true,
-}: AudioProps) => {
+const Audio = ({ data, controls = true }: AudioProps) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentVolume, setCurrentVolume] = useState(0.1);
@@ -38,6 +28,12 @@ const Audio = ({
     useState(false);
   const audioRef = useRef<ReactAudioPlayer>(null);
   const { isSmallScreen } = useScreenWidth();
+  const {
+    isPlaying,
+    isGrayScaleWhenPaused,
+    setIsPlaying,
+    setIsGrayScaleWhenPaused,
+  } = useAudioContext();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -47,14 +43,20 @@ const Audio = ({
           currentTrackIndex,
           currentTime,
           currentVolume,
-          grayScale,
+          isGrayScaleWhenPaused,
           isPlaying,
         })
       );
     }, 900);
 
     return () => clearInterval(interval);
-  }, [currentTrackIndex, currentTime, currentVolume, grayScale, isPlaying]);
+  }, [
+    currentTrackIndex,
+    currentTime,
+    currentVolume,
+    isGrayScaleWhenPaused,
+    isPlaying,
+  ]);
 
   useEffect(() => {
     const audioConfigs = localStorage.getItem("audioConfigs");
@@ -63,19 +65,17 @@ const Audio = ({
         currentTrackIndex: savedIndex,
         currentTime: savedTime,
         currentVolume: savedCurrentVolume,
-        grayScale: savedGrayScale,
-        isPlaying: savedIsPlaying,
+        isGrayScaleWhenPaused: savedGrayScale,
       } = JSON.parse(audioConfigs);
       setCurrentTrackIndex(savedIndex);
       setCurrentTime(savedTime);
-      setGrayScale(savedGrayScale);
-      // setIsPlaying(savedIsPlaying);
+      setIsGrayScaleWhenPaused(savedGrayScale);
       setIsPlaying(false);
       setCurrentVolume(savedCurrentVolume);
     }
 
     setStartTimeFromLocalStorage();
-  }, [setGrayScale, setIsPlaying]);
+  }, [setIsGrayScaleWhenPaused, setIsPlaying]);
 
   const setStartTimeFromLocalStorage = () => {
     const audioConfigs = localStorage.getItem("audioConfigs");
@@ -133,7 +133,7 @@ const Audio = ({
   };
 
   const handleCheckedgrayScale = () => {
-    setGrayScale(!grayScale);
+    setIsGrayScaleWhenPaused(!isGrayScaleWhenPaused);
   };
 
   return (
@@ -145,7 +145,13 @@ const Audio = ({
             ? "height-controls-visible"
             : "height-controls-invisible"
           : undefined
-      } ${grayScale ? (!isPlaying ? "isPaused" : undefined) : undefined}`}
+      } ${
+        isGrayScaleWhenPaused
+          ? !isPlaying
+            ? "isPaused"
+            : undefined
+          : undefined
+      }`}
     >
       <div className="display-buttons">
         <button className="btn prev-btn" onClick={playPreviousTrack}>
@@ -197,7 +203,10 @@ const Audio = ({
         />
 
         <div className="checkbox-caption">
-          <Checkbox onChange={handleCheckedgrayScale} checked={grayScale} />
+          <Checkbox
+            onChange={handleCheckedgrayScale}
+            checked={isGrayScaleWhenPaused}
+          />
           <label className="checkbox-label" htmlFor="checkBoxGrayScale">
             Gray when paused
           </label>
