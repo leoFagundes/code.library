@@ -1,4 +1,6 @@
-export type DataType = {
+export type MediaDataType = {
   fileName: string;
-  name: string;
+  title: string;
+  category: string;
+  type: "audio" | "video";
 };

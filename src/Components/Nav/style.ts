@@ -40,7 +40,7 @@ export const HeaderContainer = styled.header`
         &::before {
           content: "";
           position: absolute;
-          bottom: 0;
+          bottom: -1px;
           width: 0%;
           height: 1px;
           background-color: ${({ theme }) => theme.textColor};
@@ -79,7 +79,7 @@ export const HeaderContainer = styled.header`
 
       ul {
         opacity: 0;
-        animation: shadeIn 0.7s ease-in-out forwards 0.7s;
+        animation: shadeIn 0.7s ease-in-out forwards 0.5s;
       }
     }
 

@@ -20,20 +20,12 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
     filter: drop-shadow(0px 4px 100px ${props.theme.tertiaryColor});
   `}
 
-  &.isPaused {
-    filter: grayscale(60%) brightness(90%);
-  }
-
   &.height-controls-visible {
-    animation: ${(props) =>
-        props.issmallscreen === "true" ? "heightDownSmall" : "heightDownLarge"}
-      0.2s ease-in-out forwards;
+    animation: heightDownLarge 0.2s ease-in-out forwards;
   }
 
   &.height-controls-invisible {
-    animation: ${(props) =>
-        props.issmallscreen === "true" ? "heightUpSmall" : "heightUpLarge"}
-      0.2s ease-in-out forwards;
+    animation: heightUpLarge 0.2s ease-in-out forwards;
   }
 
   p {
@@ -79,6 +71,12 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
       justify-content: center;
       align-items: center;
       position: relative;
+
+      .play-btn {
+        position: relative;
+        height: 40px;
+        width: 40px;
+      }
 
       .spinner {
         position: absolute;
@@ -128,12 +126,6 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
       &:hover {
         cursor: pointer;
       }
-    }
-
-    .play-btn {
-      position: relative;
-      height: 40px;
-      width: 40px;
     }
   }
 
@@ -302,24 +294,6 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
     }
     to {
       height: 105px;
-    }
-  }
-
-  @keyframes heightUpSmall {
-    from {
-      height: 88px;
-    }
-    to {
-      height: 40px;
-    }
-  }
-
-  @keyframes heightDownSmall {
-    from {
-      height: 40px;
-    }
-    to {
-      height: 88px;
     }
   }
 

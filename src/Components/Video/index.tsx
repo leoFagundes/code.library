@@ -1,30 +1,34 @@
 import { useEffect, useState } from "react";
 import * as S from "./style";
 import ReactPlayer from "react-player";
+import { MediaDataType } from "../../Types/types";
+import { useDateTime } from "../../Hooks/useDateTime";
 
 type VideoProps = {
+  data: MediaDataType[];
   isPlaying: boolean;
   grayScale?: boolean;
 };
 
-const Video = ({ isPlaying, grayScale = true }: VideoProps) => {
+const Video = ({ data, isPlaying, grayScale = true }: VideoProps) => {
   const [lofiVideoName, setLofiVideoName] = useState("");
-  const date = new Date();
-  const hours = date.getHours();
+  const [playingVideo, setPlayingVideo] = useState(isPlaying);
+  const { timeOfDay } = useDateTime();
 
   useEffect(() => {
-    if (hours > 0 && hours <= 6) {
-      setLofiVideoName("lofi2");
-    } else if (hours > 6 && hours <= 12) {
-      setLofiVideoName("lofi1");
-    } else if (hours > 12 && hours <= 18) {
-      setLofiVideoName("lofi3");
+    const videoData = data.find((item) => item.category === timeOfDay);
+    if (videoData) {
+      setLofiVideoName(videoData.fileName);
     } else {
-      setLofiVideoName("lofi4");
+      setLofiVideoName("");
     }
-  }, []);
+  }, [timeOfDay, data]);
 
-  console.log(hours);
+  useEffect(() => {
+    setTimeout(() => {
+      setPlayingVideo(isPlaying);
+    }, 150);
+  }, [isPlaying]);
 
   return (
     <S.VideoContainer
@@ -34,7 +38,7 @@ const Video = ({ isPlaying, grayScale = true }: VideoProps) => {
         url={`assets/videos/${lofiVideoName}.mp4`}
         controls={false}
         muted
-        playing={isPlaying}
+        playing={playingVideo}
         loop
         width="500px"
         height="auto"

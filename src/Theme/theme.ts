@@ -7,9 +7,10 @@ type ThemeType = {
   mainWhite: string;
   mainBlack: string;
   pageTopPadding: string;
+  primaryRadialGradientBackground?: string;
 };
 
-const theme: ThemeType = {
+const baseTheme: ThemeType = {
   primaryColor: "#19212c",
   secondaryColor: "#2E3944",
   tertiaryColor: "#124E66",
@@ -18,6 +19,19 @@ const theme: ThemeType = {
   mainWhite: "#F9F9F9",
   mainBlack: "#222326",
   pageTopPadding: "70px",
+};
+
+function generateprimaryRadialGradient(theme: ThemeType): string {
+  return `radial-gradient(
+    circle,
+    ${theme.tertiaryColor}95 0%,
+    ${theme.primaryColor}50 90%
+  )`;
+}
+
+const theme: ThemeType = {
+  ...baseTheme,
+  primaryRadialGradientBackground: generateprimaryRadialGradient(baseTheme),
 };
 
 export default theme;

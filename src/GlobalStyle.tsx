@@ -20,6 +20,8 @@ const GlobalStyle = createGlobalStyle`
   background-color: ${({ theme }) => theme.primaryColor};
   color: ${({ theme }) => theme.textColor};
   -webkit-tap-highlight-color: transparent;
+  /* background: radial-gradient(circle, ${({ theme }) =>
+    theme.tertiaryColor} 0%, ${({ theme }) => theme.primaryColor} 70%); */
 }
 
 code {

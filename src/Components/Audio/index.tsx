@@ -9,16 +9,17 @@ import {
   faBackwardStep,
   faCaretUp,
 } from "@fortawesome/free-solid-svg-icons";
-import { DataType } from "../../Types/types";
+import { MediaDataType } from "../../Types/types";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
 import Checkbox from "../Checkbox";
 
 type AudioProps = {
-  data: DataType[];
+  data: MediaDataType[];
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   grayScale?: boolean;
   setGrayScale?: React.Dispatch<React.SetStateAction<boolean>>;
+  controls?: boolean;
 };
 
 const Audio = ({
@@ -27,6 +28,7 @@ const Audio = ({
   setIsPlaying,
   grayScale = false,
   setGrayScale = () => {},
+  controls = true,
 }: AudioProps) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -35,6 +37,7 @@ const Audio = ({
   const [isControlsManageAlreadyClicked, setIsControlsManageAlreadyClicked] =
     useState(false);
   const audioRef = useRef<ReactAudioPlayer>(null);
+  const { isSmallScreen } = useScreenWidth();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,7 +69,8 @@ const Audio = ({
       setCurrentTrackIndex(savedIndex);
       setCurrentTime(savedTime);
       setGrayScale(savedGrayScale);
-      setIsPlaying(savedIsPlaying);
+      // setIsPlaying(savedIsPlaying);
+      setIsPlaying(false);
       setCurrentVolume(savedCurrentVolume);
     }
 
@@ -98,18 +102,19 @@ const Audio = ({
 
   const playNextTrack = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % data.length);
-    setIsPlaying(true);
+    console.log(isPlaying);
   };
 
   const playPreviousTrack = () => {
     setCurrentTrackIndex(
       (prevIndex) => (prevIndex - 1 + data.length) % data.length
     );
-    setIsPlaying(true);
   };
 
   const onEnded = () => {
     playNextTrack();
+    setIsPlaying(true);
+    console.log(isPlaying);
   };
 
   const handleListen = (currentTime: number) => {
@@ -131,8 +136,6 @@ const Audio = ({
     setGrayScale(!grayScale);
   };
 
-  const { isSmallScreen } = useScreenWidth();
-
   return (
     <S.AudioContainer
       issmallscreen={isSmallScreen ? "true" : "false"}
@@ -145,7 +148,7 @@ const Audio = ({
       } ${grayScale ? (!isPlaying ? "isPaused" : undefined) : undefined}`}
     >
       <div className="display-buttons">
-        <button className="btn" onClick={playPreviousTrack}>
+        <button className="btn prev-btn" onClick={playPreviousTrack}>
           <FontAwesomeIcon size="sm" color="white" icon={faBackwardStep} />
         </button>
 
@@ -165,7 +168,7 @@ const Audio = ({
           </button>
         </div>
 
-        <button className="btn" onClick={playNextTrack}>
+        <button className="btn prev-btn" onClick={playNextTrack}>
           <FontAwesomeIcon size="sm" color="white" icon={faForwardStep} />
         </button>
       </div>
@@ -193,29 +196,29 @@ const Audio = ({
           onVolumeChanged={handleVolume}
         />
 
-        {!isSmallScreen && (
-          <div className="checkbox-caption">
-            <Checkbox onChange={handleCheckedgrayScale} checked={grayScale} />
-            <label className="checkbox-label" htmlFor="checkBoxGrayScale">
-              Gray when paused
-            </label>
-          </div>
-        )}
+        <div className="checkbox-caption">
+          <Checkbox onChange={handleCheckedgrayScale} checked={grayScale} />
+          <label className="checkbox-label" htmlFor="checkBoxGrayScale">
+            Gray when paused
+          </label>
+        </div>
       </div>
-      <p className="current-track">{data[currentTrackIndex].name}</p>
-      <FontAwesomeIcon
-        className={`controls-manage-icon ${
-          isControlsManageAlreadyClicked
-            ? isControlsVisible
-              ? "controls-visible"
-              : "controls-invisible"
-            : undefined
-        }`}
-        size="lg"
-        color="white"
-        icon={faCaretUp}
-        onClick={handleControlManage}
-      />
+      <p className="current-track">{data[currentTrackIndex].title}</p>
+      {controls && (
+        <FontAwesomeIcon
+          className={`controls-manage-icon ${
+            isControlsManageAlreadyClicked
+              ? isControlsVisible
+                ? "controls-visible"
+                : "controls-invisible"
+              : undefined
+          }`}
+          size="lg"
+          color="white"
+          icon={faCaretUp}
+          onClick={handleControlManage}
+        />
+      )}
     </S.AudioContainer>
   );
 };
