@@ -3,14 +3,14 @@ import * as S from "./style";
 import ReactPlayer from "react-player";
 import { MediaDataType } from "../../Types/types";
 import { useDateTime } from "../../Hooks/useDateTime";
+import { useAudioContext } from "../../Contexts/AudiotContext";
 
 type VideoProps = {
   data: MediaDataType[];
-  isPlaying: boolean;
-  grayScale?: boolean;
 };
 
-const Video = ({ data, isPlaying, grayScale = true }: VideoProps) => {
+const Video = ({ data }: VideoProps) => {
+  const { isPlaying, isGrayScaleWhenPaused } = useAudioContext();
   const [lofiVideoName, setLofiVideoName] = useState("");
   const [playingVideo, setPlayingVideo] = useState(isPlaying);
   const { timeOfDay } = useDateTime();
@@ -32,7 +32,13 @@ const Video = ({ data, isPlaying, grayScale = true }: VideoProps) => {
 
   return (
     <S.VideoContainer
-      className={grayScale ? (!isPlaying ? "isPaused" : undefined) : undefined}
+      className={
+        isGrayScaleWhenPaused
+          ? !isPlaying
+            ? "isPaused"
+            : undefined
+          : undefined
+      }
     >
       <ReactPlayer
         url={`assets/videos/${lofiVideoName}.mp4`}
