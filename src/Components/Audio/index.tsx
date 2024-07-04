@@ -8,11 +8,14 @@ import {
   faForwardStep,
   faBackwardStep,
   faCaretUp,
+  faIcons,
 } from "@fortawesome/free-solid-svg-icons";
-import { MediaDataType } from "../../Types/types";
-import { useScreenWidth } from "../../Hooks/useScreenWidth";
+import { MediaDataType } from "src/Types/types";
+import { useScreenWidth } from "src/Hooks/useScreenWidth";
 import Checkbox from "../Checkbox";
-import { useAudioContext } from "../../Contexts/AudioContext";
+import { useAudioContext } from "src/Contexts/AudioContext";
+import Teste from "../Dropdown";
+import Dropdown from "../Dropdown";
 
 type AudioProps = {
   data: MediaDataType[];
@@ -20,6 +23,9 @@ type AudioProps = {
 };
 
 const Audio = ({ data, controls = true }: AudioProps) => {
+  const [filteredCategoryOption, setFilteredCategoryOption] = useState("Todas");
+  const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isControlsManageAlreadyClicked, setIsControlsManageAlreadyClicked] =
     useState(false);
   const audioRef = useRef<ReactAudioPlayer>(null);
@@ -38,6 +44,12 @@ const Audio = ({ data, controls = true }: AudioProps) => {
     setCurrentTime,
     setCurrentVolume,
   } = useAudioContext();
+
+  useEffect(() => {
+    const categories = data.map((item) => item.category);
+    const uniqueCategories = Array.from(new Set(categories));
+    setCategoryOptions(["Todas", ...uniqueCategories]);
+  }, [data]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -88,6 +100,17 @@ const Audio = ({ data, controls = true }: AudioProps) => {
     setCurrentVolume,
   ]);
 
+  const filteredData = () => {
+    if (filteredCategoryOption && filteredCategoryOption !== "Todas") {
+      const newData = data.filter(
+        (audioItem) => audioItem.category === filteredCategoryOption
+      );
+      if (newData) return newData;
+    }
+
+    return data;
+  };
+
   const setStartTimeFromLocalStorage = () => {
     const audioConfigs = localStorage.getItem("audioConfigs");
     if (audioConfigs) {
@@ -112,12 +135,15 @@ const Audio = ({ data, controls = true }: AudioProps) => {
   };
 
   const playNextTrack = () => {
-    setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % data.length);
+    setCurrentTrackIndex(
+      (prevIndex) => (prevIndex + 1) % filteredData().length
+    );
   };
 
   const playPreviousTrack = () => {
     setCurrentTrackIndex(
-      (prevIndex) => (prevIndex - 1 + data.length) % data.length
+      (prevIndex) =>
+        (prevIndex - 1 + filteredData().length) % filteredData().length
     );
   };
 
@@ -146,8 +172,15 @@ const Audio = ({ data, controls = true }: AudioProps) => {
     setIsGrayScaleWhenPaused(!isGrayScaleWhenPaused);
   };
 
+  const handleOptionClick = (option: string) => {
+    setFilteredCategoryOption(option);
+    setIsDropdownOpen(false);
+    setCurrentTrackIndex(0);
+  };
+
   return (
     <S.AudioContainer
+      data-testid={"audio-element"}
       issmallscreen={isSmallScreen ? "true" : "false"}
       isControls={controls ? "true" : "false"}
       className={`${
@@ -165,13 +198,21 @@ const Audio = ({ data, controls = true }: AudioProps) => {
       }`}
     >
       <div className="display-buttons">
-        <button className="btn prev-btn" onClick={playPreviousTrack}>
+        <button
+          data-testid="prev-button"
+          className="btn prev-btn"
+          onClick={playPreviousTrack}
+        >
           <FontAwesomeIcon size="sm" color="white" icon={faBackwardStep} />
         </button>
 
         <div className="play-btn-container">
           <div className={`spinner ${!isPlaying && "spinner-hidden"}`} />
-          <button className="btn play-btn" onClick={togglePlay}>
+          <button
+            data-testid="play-button"
+            className="btn play-btn"
+            onClick={togglePlay}
+          >
             {isPlaying ? (
               <FontAwesomeIcon size="lg" color="white" icon={faPause} />
             ) : (
@@ -185,7 +226,11 @@ const Audio = ({ data, controls = true }: AudioProps) => {
           </button>
         </div>
 
-        <button className="btn prev-btn" onClick={playNextTrack}>
+        <button
+          data-testid="next-button"
+          className="btn prev-btn"
+          onClick={playNextTrack}
+        >
           <FontAwesomeIcon size="sm" color="white" icon={faForwardStep} />
         </button>
       </div>
@@ -200,7 +245,7 @@ const Audio = ({ data, controls = true }: AudioProps) => {
       >
         <ReactAudioPlayer
           ref={audioRef}
-          src={`assets/music/${data[currentTrackIndex].fileName}`}
+          src={`assets/music/${filteredData()[currentTrackIndex].fileName}`}
           volume={currentVolume}
           controls
           autoPlay={isPlaying}
@@ -223,21 +268,37 @@ const Audio = ({ data, controls = true }: AudioProps) => {
           </label>
         </div>
       </div>
-      <p className="current-track">{data[currentTrackIndex].title}</p>
+      <p className="current-track">
+        {filteredData()[currentTrackIndex].title} | Categoria:{" "}
+        {filteredCategoryOption}
+      </p>
       {controls && (
-        <FontAwesomeIcon
-          className={`controls-manage-icon ${
-            isControlsManageAlreadyClicked
-              ? isControlsVisible
-                ? "controls-visible"
-                : "controls-invisible"
-              : undefined
-          }`}
-          size="lg"
-          color="white"
-          icon={faCaretUp}
-          onClick={handleControlManage}
-        />
+        <div className="controls-container">
+          <Dropdown
+            label="Categorias"
+            options={categoryOptions}
+            onClickOption={handleOptionClick}
+            isOpen={isDropdownOpen}
+            toggleOpenStatus={() => setIsDropdownOpen(!isDropdownOpen)}
+            currentOption={filteredCategoryOption}
+            size="2xs"
+            icon={faIcons}
+          />
+          <FontAwesomeIcon
+            data-testid="manage-controls-button"
+            className={`controls-manage-icon ${
+              isControlsManageAlreadyClicked
+                ? isControlsVisible
+                  ? "controls-visible"
+                  : "controls-invisible"
+                : undefined
+            }`}
+            size="lg"
+            color="white"
+            icon={faCaretUp}
+            onClick={handleControlManage}
+          />
+        </div>
       )}
     </S.AudioContainer>
   );

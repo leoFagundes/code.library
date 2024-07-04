@@ -69,7 +69,7 @@ export const HeaderContainer = styled.header`
     box-sizing: border-box;
     border-right: 1px solid ${({ theme }) => theme.textColor};
 
-    &.isOpen {
+    &.is-open {
       animation: slideRight 0.7s ease-in-out forwards;
 
       h2 {
@@ -83,7 +83,7 @@ export const HeaderContainer = styled.header`
       }
     }
 
-    &.isClose {
+    &.is-close {
       animation: slideLeft 0.7s ease-in-out forwards;
 
       h2 {

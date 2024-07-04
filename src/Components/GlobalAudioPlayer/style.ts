@@ -12,7 +12,7 @@ export const GlobalAudioContainer = styled.div<{
   justify-content: center;
   position: fixed;
   z-index: 2;
-  overflow: hidden;
+
   background-color: ${({ theme }) => theme.primaryRadialGradientBackground};
   transform: translateX(var(--container-width));
   height: 30px;

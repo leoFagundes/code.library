@@ -41,23 +41,42 @@ export const AudioContainer = styled.div<{
     left: 5px;
   }
 
-  .controls-manage-icon {
+  .controls-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     position: absolute;
     top: 5px;
     right: 10px;
     z-index: 2;
-    transform: rotate(180deg);
 
-    &.controls-visible {
-      animation: rotateUp 0.3s ease-in-out forwards;
+    .dropdown-select {
+      display: flex;
+      justify-content: center;
+      border: none;
+      padding: 2px;
+      background: ${({ theme }) => theme.primaryRadialGradientBackground};
+      color: ${({ theme }) => theme.textColor};
+
+      option {
+        font-size: 12px;
+      }
     }
 
-    &.controls-invisible {
-      animation: rotateDown 0.3s ease-in-out forwards;
-    }
+    .controls-manage-icon {
+      transform: rotate(180deg);
 
-    &:hover {
-      cursor: pointer;
+      &.controls-visible {
+        animation: rotateUp 0.3s ease-in-out forwards;
+      }
+
+      &.controls-invisible {
+        animation: rotateDown 0.3s ease-in-out forwards;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 

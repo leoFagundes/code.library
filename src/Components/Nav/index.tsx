@@ -26,6 +26,7 @@ const NavBar = () => {
   const mobileNavBarTemplate = () => (
     <>
       <label
+        data-testid="hamburguer-menu"
         onClick={handleToggleNavbar}
         className={`hamburguer-menu`}
         htmlFor="check"
@@ -36,9 +37,10 @@ const NavBar = () => {
         <span></span>
       </label>
       <nav
+        data-testid="nav-bar"
         ref={navRef}
         className={`mobile-layout  ${
-          isNavbarOpen !== null ? (isNavbarOpen ? "isOpen" : "isClose") : ""
+          isNavbarOpen !== null ? (isNavbarOpen ? "is-open" : "is-close") : ""
         }`}
       >
         <h2>
@@ -55,7 +57,7 @@ const NavBar = () => {
 
   const desktopNavBarTemplate = () => (
     <>
-      <nav className="desktop-layout">
+      <nav data-testid="nav-bar" className="desktop-layout">
         <h2>
           <Link to={"/"}>Code.Library</Link>
         </h2>
