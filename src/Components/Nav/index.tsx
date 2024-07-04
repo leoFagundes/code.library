@@ -1,12 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Line from "../Line";
 import * as S from "./style";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NavBar = () => {
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean | null>(null);
   const { isSmallScreen } = useScreenWidth();
+  const navRef = useRef<HTMLElement>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isNavbarOpen !== null) {
+      navRef.current?.classList.remove("isOpen");
+      setIsNavbarOpen(false);
+    }
+  }, [location]);
 
   const handleToggleNavbar = (e: React.MouseEvent<HTMLLabelElement>) => {
     if (e.target instanceof HTMLInputElement) {
@@ -14,50 +23,55 @@ const NavBar = () => {
     }
   };
 
+  const mobileNavBarTemplate = () => (
+    <>
+      <label
+        onClick={handleToggleNavbar}
+        className={`hamburguer-menu`}
+        htmlFor="check"
+      >
+        <input type="checkbox" id="check" />
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <nav
+        ref={navRef}
+        className={`mobile-layout  ${
+          isNavbarOpen !== null ? (isNavbarOpen ? "isOpen" : "isClose") : ""
+        }`}
+      >
+        <h2>
+          <Link to={"/"}>Code.Library</Link>
+        </h2>
+        <ul>
+          <li>
+            <Link to={"/library"}>Library</Link>
+          </li>
+        </ul>
+      </nav>
+    </>
+  );
+
+  const desktopNavBarTemplate = () => (
+    <>
+      <nav className="desktop-layout">
+        <h2>
+          <Link to={"/"}>Code.Library</Link>
+        </h2>
+        <ul>
+          <li>
+            <Link to={"/library"}>Library</Link>
+          </li>
+        </ul>
+      </nav>
+      <Line margintop="8px" absolute="true" bottom="0" />
+    </>
+  );
+
   return (
     <S.HeaderContainer>
-      {isSmallScreen ? (
-        <>
-          <label
-            onClick={handleToggleNavbar}
-            className={`hamburguer-menu`}
-            htmlFor="check"
-          >
-            <input type="checkbox" id="check" />
-            <span></span>
-            <span></span>
-            <span></span>
-          </label>
-          <nav
-            className={`mobile-layout  ${
-              isNavbarOpen !== null ? (isNavbarOpen ? "isOpen" : "isClose") : ""
-            }`}
-          >
-            <h2>
-              <Link to={"/"}>Code.Library</Link>
-            </h2>
-            <ul>
-              <li>
-                <Link to={"/"}>Library</Link>
-              </li>
-            </ul>
-          </nav>
-        </>
-      ) : (
-        <>
-          <nav className="desktop-layout">
-            <h2>
-              <Link to={"/"}>Code.Library</Link>
-            </h2>
-            <ul>
-              <li>
-                <Link to={"/"}>Library</Link>
-              </li>
-            </ul>
-          </nav>
-          <Line margintop="8px" absolute="true" bottom="0" />
-        </>
-      )}
+      {isSmallScreen ? mobileNavBarTemplate() : desktopNavBarTemplate()}
     </S.HeaderContainer>
   );
 };

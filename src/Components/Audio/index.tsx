@@ -12,7 +12,7 @@ import {
 import { MediaDataType } from "../../Types/types";
 import { useScreenWidth } from "../../Hooks/useScreenWidth";
 import Checkbox from "../Checkbox";
-import { useAudioContext } from "../../Contexts/AudiotContext";
+import { useAudioContext } from "../../Contexts/AudioContext";
 
 type AudioProps = {
   data: MediaDataType[];
@@ -20,10 +20,6 @@ type AudioProps = {
 };
 
 const Audio = ({ data, controls = true }: AudioProps) => {
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [currentVolume, setCurrentVolume] = useState(0.1);
-  const [isControlsVisible, setIsControlsVisible] = useState(false);
   const [isControlsManageAlreadyClicked, setIsControlsManageAlreadyClicked] =
     useState(false);
   const audioRef = useRef<ReactAudioPlayer>(null);
@@ -31,8 +27,16 @@ const Audio = ({ data, controls = true }: AudioProps) => {
   const {
     isPlaying,
     isGrayScaleWhenPaused,
+    isControlsVisible,
     setIsPlaying,
     setIsGrayScaleWhenPaused,
+    setIsControlsVisible,
+    currentTrackIndex,
+    currentTime,
+    currentVolume,
+    setCurrentTrackIndex,
+    setCurrentTime,
+    setCurrentVolume,
   } = useAudioContext();
 
   useEffect(() => {
@@ -66,16 +70,23 @@ const Audio = ({ data, controls = true }: AudioProps) => {
         currentTime: savedTime,
         currentVolume: savedCurrentVolume,
         isGrayScaleWhenPaused: savedGrayScale,
+        isPlaying: savedIsPlaying,
       } = JSON.parse(audioConfigs);
       setCurrentTrackIndex(savedIndex);
       setCurrentTime(savedTime);
       setIsGrayScaleWhenPaused(savedGrayScale);
-      setIsPlaying(false);
+      setIsPlaying(savedIsPlaying);
       setCurrentVolume(savedCurrentVolume);
     }
 
     setStartTimeFromLocalStorage();
-  }, [setIsGrayScaleWhenPaused, setIsPlaying]);
+  }, [
+    setIsPlaying,
+    setIsGrayScaleWhenPaused,
+    setCurrentTrackIndex,
+    setCurrentTime,
+    setCurrentVolume,
+  ]);
 
   const setStartTimeFromLocalStorage = () => {
     const audioConfigs = localStorage.getItem("audioConfigs");
@@ -102,7 +113,6 @@ const Audio = ({ data, controls = true }: AudioProps) => {
 
   const playNextTrack = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % data.length);
-    console.log(isPlaying);
   };
 
   const playPreviousTrack = () => {
@@ -139,6 +149,7 @@ const Audio = ({ data, controls = true }: AudioProps) => {
   return (
     <S.AudioContainer
       issmallscreen={isSmallScreen ? "true" : "false"}
+      isControls={controls ? "true" : "false"}
       className={`${
         isControlsManageAlreadyClicked
           ? isControlsVisible

@@ -1,4 +1,4 @@
-import { MediaDataType } from "../../Types/types";
+import { MediaDataType } from "../Types/types";
 
 const lofiAudioData: MediaDataType[] = [
   {

@@ -24,7 +24,7 @@ const baseTheme: ThemeType = {
 function generateprimaryRadialGradient(theme: ThemeType): string {
   return `radial-gradient(
     circle,
-    ${theme.tertiaryColor}95 0%,
+    ${theme.tertiaryColor}75 0%,
     ${theme.primaryColor}50 90%
   )`;
 }

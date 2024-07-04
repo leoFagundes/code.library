@@ -3,7 +3,7 @@ import * as S from "./style";
 import ReactPlayer from "react-player";
 import { MediaDataType } from "../../Types/types";
 import { useDateTime } from "../../Hooks/useDateTime";
-import { useAudioContext } from "../../Contexts/AudiotContext";
+import { useAudioContext } from "../../Contexts/AudioContext";
 
 type VideoProps = {
   data: MediaDataType[];

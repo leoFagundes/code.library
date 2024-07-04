@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
+export const AudioContainer = styled.div<{
+  issmallscreen: "true" | "false";
+  isControls: "true" | "false";
+}>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,7 +14,7 @@ export const AudioContainer = styled.div<{ issmallscreen: "true" | "false" }>`
   padding: 10px 5px;
   border-radius: 5px;
   box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.25);
-  min-width: 300px;
+  width: ${(props) => (props.isControls === "true" ? "300px" : "200px")};
   height: 40px;
   transition: 1s;
   ${(props) =>
