@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-export const AudioContainer = styled.div<{
+type AudioProps = {
   issmallscreen: "true" | "false";
   isControls: "true" | "false";
-}>`
+};
+
+export const AudioContainer = styled.div<AudioProps>`
   display: flex;
   flex-direction: column;
   align-items: center;

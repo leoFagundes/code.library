@@ -86,6 +86,8 @@ export const DropdownContainer = styled.label`
       color: var(--nav-title-color);
       font-size: var(--nav-title-size);
       text-transform: uppercase;
+      text-align: center;
+      transform: translateY(-4px);
     }
 
     ul {

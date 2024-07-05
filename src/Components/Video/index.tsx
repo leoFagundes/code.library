@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import * as S from "./style";
 import ReactPlayer from "react-player";
-import { MediaDataType } from "../../Types/types";
-import { useDateTime } from "../../Hooks/useDateTime";
-import { useAudioContext } from "../../Contexts/AudioContext";
+import { MediaDataType } from "src/Types/types";
+import { useDateTime } from "src/Hooks/useDateTime";
+import { useAudioContext } from "src/Contexts/AudioContext";
 
 type VideoProps = {
   data: MediaDataType[];

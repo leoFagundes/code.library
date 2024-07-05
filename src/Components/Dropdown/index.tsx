@@ -1,7 +1,6 @@
 import * as S from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIcons, faHeadphonesSimple } from "@fortawesome/free-solid-svg-icons";
-import { ReactNode } from "react";
+import { faHeadphonesSimple } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 type DropdownProps = {
