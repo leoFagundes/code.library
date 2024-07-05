@@ -12,8 +12,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle
-        isSmallScreen={isSmallScreen ? "true" : "false"}
-        grayScale={!isPlaying && isGrayScaleWhenPaused ? "true" : "false"}
+        $isSmallScreen={isSmallScreen}
+        $grayScale={!isPlaying && isGrayScaleWhenPaused}
       />
       <Router />
     </ThemeProvider>

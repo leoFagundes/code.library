@@ -28,6 +28,7 @@ type DropdownProps = {
     | "8x"
     | "9x"
     | "10x";
+  optionIcon?: IconProp;
 };
 
 export default function Dropdown({
@@ -39,9 +40,10 @@ export default function Dropdown({
   currentOption,
   icon,
   size = "xl",
+  optionIcon,
 }: DropdownProps) {
   return (
-    <S.DropdownContainer className="popup">
+    <S.DropdownContainer data-testid="dropdown" className="popup">
       <input type="checkbox" checked={isOpen} onChange={toggleOpenStatus} />
       <FontAwesomeIcon
         size={size}
@@ -62,7 +64,10 @@ export default function Dropdown({
                     : ""
                 }
               >
-                <FontAwesomeIcon color="black" icon={faHeadphonesSimple} />
+                {optionIcon && (
+                  <FontAwesomeIcon color="black" icon={faHeadphonesSimple} />
+                )}
+
                 <span>{option}</span>
               </button>
             </li>

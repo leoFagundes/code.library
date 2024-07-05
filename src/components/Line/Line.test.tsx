@@ -17,7 +17,7 @@ describe("#Line", () => {
         margintop="10px"
         marginbottom="10px"
         width="100px"
-        absolute="true"
+        absolute
         top="10px"
         bottom="10px"
         right="10px"

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 type AudioProps = {
-  issmallscreen: "true" | "false";
-  iscontrols: "true" | "false";
+  $isSmallScreen: boolean;
+  $isControls: boolean;
 };
 
 export const AudioContainer = styled.div<AudioProps>`
@@ -16,11 +16,11 @@ export const AudioContainer = styled.div<AudioProps>`
   padding: 10px 5px;
   border-radius: 5px;
   box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.25);
-  width: ${(props) => (props.iscontrols === "true" ? "300px" : "200px")};
+  width: ${(props) => (props.$isControls ? "300px" : "200px")};
   height: 40px;
   transition: 1s;
   ${(props) =>
-    props.issmallscreen === "true" &&
+    props.$isSmallScreen &&
     `
     filter: drop-shadow(0px 4px 100px ${props.theme.tertiaryColor});
   `}

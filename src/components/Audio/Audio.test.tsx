@@ -1,3 +1,8 @@
+beforeAll(() => {
+  HTMLMediaElement.prototype.play = jest.fn();
+  HTMLMediaElement.prototype.pause = jest.fn();
+});
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import Audio from ".";
 import { MediaDataType } from "src/types/types";

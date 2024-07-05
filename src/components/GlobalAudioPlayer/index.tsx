@@ -30,8 +30,8 @@ const GlobalAudioPlayer = () => {
 
   return (
     <S.GlobalAudioContainer
-      isPlaying={isPlaying ? "true" : "false"}
-      issmallscreen={isSmallScreen ? "true" : "false"}
+      $isPlaying={isPlaying}
+      $isSmallScreen={isSmallScreen}
       className={`${
         isGlobalAudioContainerOpen
           ? "is-global-audio-open"

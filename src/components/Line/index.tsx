@@ -9,7 +9,7 @@ type LineProps = {
   bottom?: string;
   right?: string;
   left?: string;
-  absolute?: "true" | "false";
+  absolute?: boolean;
 };
 
 const Line = ({
@@ -27,14 +27,14 @@ const Line = ({
     <S.LineContainer
       data-testid="lineElement"
       color={color}
-      margintop={margintop}
-      marginbottom={marginbottom}
+      $marginTop={margintop}
+      $marginBottom={marginbottom}
       width={width}
       top={top}
-      bottom={bottom}
+      $bottom={bottom}
       right={right}
       left={left}
-      absolute={absolute}
+      $absolute={absolute}
     />
   );
 };

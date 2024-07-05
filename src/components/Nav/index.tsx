@@ -15,6 +15,8 @@ const NavBar = () => {
       navRef.current?.classList.remove("isOpen");
       setIsNavbarOpen(false);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const handleToggleNavbar = (e: React.MouseEvent<HTMLLabelElement>) => {
@@ -67,7 +69,7 @@ const NavBar = () => {
           </li>
         </ul>
       </nav>
-      <Line margintop="8px" absolute="true" bottom="0" />
+      <Line margintop="8px" absolute bottom="0" />
     </>
   );
 

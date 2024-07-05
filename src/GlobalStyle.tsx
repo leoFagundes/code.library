@@ -1,11 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle<{
-  grayScale: "true" | "false";
-  isSmallScreen: "true" | "false";
-}>`
-  @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+type GlobalStyleProps = {
+  $grayScale: boolean;
+  $isSmallScreen: boolean;
+};
+
+const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+  /* @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
 
   *::selection {
     color: ${({ theme }) => theme.mainWhite};
@@ -27,19 +29,14 @@ const GlobalStyle = createGlobalStyle<{
   main {
     overflow-x: hidden;
     background: ${(props) =>
-      props.isSmallScreen === "true"
+      props.$isSmallScreen
         ? props.theme.primaryColor
         : props.theme.primaryRadialGradientBackground};
     animation: ${(props) =>
-      props.grayScale === "true"
+      props.$grayScale
         ? "changeToGrayScale 1s ease-in-out forwards"
         : "changeToNormalScale 1s ease-in-out forwards"};
   }
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 h1, h2, h3, h4, h5, h6 {

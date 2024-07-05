@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-export const GlobalAudioContainer = styled.div<{
-  issmallscreen: "true" | "false";
-  isPlaying: "true" | "false";
-}>`
-  --container-width: ${(props) =>
-    props.issmallscreen === "true" ? "230px" : "330px"};
+type ContainerProps = {
+  $isSmallScreen: boolean;
+  $isPlaying: boolean;
+};
+
+export const GlobalAudioContainer = styled.div<ContainerProps>`
+  --container-width: ${(props) => (props.$isSmallScreen ? "230px" : "330px")};
 
   display: flex;
   align-items: center;
@@ -29,7 +30,7 @@ export const GlobalAudioContainer = styled.div<{
     z-index: 3;
 
     filter: ${(props) =>
-      props.isPlaying === "true"
+      props.$isPlaying
         ? `drop-shadow(0 2px 10px ${props.theme.tertiaryColor}) saturate(105%) brightness(110%) contrast(105%)`
         : ""};
 

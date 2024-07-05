@@ -9,12 +9,12 @@ import {
   faBackwardStep,
   faCaretUp,
   faIcons,
+  faHeadphonesSimple,
 } from "@fortawesome/free-solid-svg-icons";
 import { MediaDataType } from "src/types/types";
 import { useScreenWidth } from "src/hooks/useScreenWidth";
 import Checkbox from "../Checkbox";
 import { useAudioContext } from "src/contexts/AudioContext";
-import Teste from "../Dropdown";
 import Dropdown from "../Dropdown";
 
 type AudioProps = {
@@ -89,9 +89,11 @@ const Audio = ({ data, controls = true }: AudioProps) => {
       setIsGrayScaleWhenPaused(savedGrayScale);
       setIsPlaying(savedIsPlaying);
       setCurrentVolume(savedCurrentVolume);
-    }
 
-    setStartTimeFromLocalStorage();
+      if (audioRef.current && audioRef.current.audioEl.current) {
+        audioRef.current.audioEl.current.currentTime = savedTime;
+      }
+    }
   }, [
     setIsPlaying,
     setIsGrayScaleWhenPaused,
@@ -109,17 +111,6 @@ const Audio = ({ data, controls = true }: AudioProps) => {
     }
 
     return data;
-  };
-
-  const setStartTimeFromLocalStorage = () => {
-    const audioConfigs = localStorage.getItem("audioConfigs");
-    if (audioConfigs) {
-      const { currentTime: savedTime } = JSON.parse(audioConfigs);
-      setCurrentTime(savedTime);
-      if (audioRef.current && audioRef.current.audioEl.current) {
-        audioRef.current.audioEl.current.currentTime = savedTime;
-      }
-    }
   };
 
   const togglePlay = () => {
@@ -168,7 +159,7 @@ const Audio = ({ data, controls = true }: AudioProps) => {
     setIsControlsVisible(!isControlsVisible);
   };
 
-  const handleCheckedgrayScale = () => {
+  const handleCheckedGrayscale = () => {
     setIsGrayScaleWhenPaused(!isGrayScaleWhenPaused);
   };
 
@@ -181,8 +172,8 @@ const Audio = ({ data, controls = true }: AudioProps) => {
   return (
     <S.AudioContainer
       data-testid={"audio-element"}
-      issmallscreen={isSmallScreen ? "true" : "false"}
-      iscontrols={controls ? "true" : "false"}
+      $isSmallScreen={isSmallScreen}
+      $isControls={controls}
       className={`${
         isControlsManageAlreadyClicked
           ? isControlsVisible
@@ -260,8 +251,9 @@ const Audio = ({ data, controls = true }: AudioProps) => {
 
         <div className="checkbox-caption">
           <Checkbox
-            onChange={handleCheckedgrayScale}
+            onChange={handleCheckedGrayscale}
             checked={isGrayScaleWhenPaused}
+            id="checkBoxGrayScale"
           />
           <label className="checkbox-label" htmlFor="checkBoxGrayScale">
             Gray when paused
@@ -283,6 +275,7 @@ const Audio = ({ data, controls = true }: AudioProps) => {
             currentOption={filteredCategoryOption}
             size="2xs"
             icon={faIcons}
+            optionIcon={faHeadphonesSimple}
           />
           <FontAwesomeIcon
             data-testid="manage-controls-button"
