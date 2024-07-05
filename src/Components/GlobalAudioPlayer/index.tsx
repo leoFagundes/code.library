@@ -1,11 +1,11 @@
-import lofiAudioData from "src/Data/lofiAudioData";
+import lofiAudioData from "src/data/lofiAudioData";
 import Audio from "../Audio";
 import * as S from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeadphonesSimple } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useAudioContext } from "src/Contexts/AudioContext";
-import { useScreenWidth } from "src/Hooks/useScreenWidth";
+import { useAudioContext } from "src/contexts/AudioContext";
+import { useScreenWidth } from "src/hooks/useScreenWidth";
 
 const GlobalAudioPlayer = () => {
   const [isGlobalAudioContainerOpen, setIsGlobalAudioContainerOpen] =

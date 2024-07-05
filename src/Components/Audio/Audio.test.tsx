@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Audio from ".";
-import { MediaDataType } from "src/Types/types";
-import { useScreenWidth } from "src/Hooks/useScreenWidth";
-import { useAudioContext } from "src/Contexts/AudioContext";
+import { MediaDataType } from "src/types/types";
+import { useScreenWidth } from "src/hooks/useScreenWidth";
+import { useAudioContext } from "src/contexts/AudioContext";
 
 jest.mock("src/Hooks/useScreenWidth");
 jest.mock("src/Contexts/AudioContext");

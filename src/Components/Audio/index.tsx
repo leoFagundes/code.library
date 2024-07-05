@@ -10,10 +10,10 @@ import {
   faCaretUp,
   faIcons,
 } from "@fortawesome/free-solid-svg-icons";
-import { MediaDataType } from "src/Types/types";
-import { useScreenWidth } from "src/Hooks/useScreenWidth";
+import { MediaDataType } from "src/types/types";
+import { useScreenWidth } from "src/hooks/useScreenWidth";
 import Checkbox from "../Checkbox";
-import { useAudioContext } from "src/Contexts/AudioContext";
+import { useAudioContext } from "src/contexts/AudioContext";
 import Teste from "../Dropdown";
 import Dropdown from "../Dropdown";
 

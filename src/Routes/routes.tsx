@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Home from "src/Pages/Home";
-import NavBar from "src/Components/Nav";
-import Library from "src/Pages/Library";
-import GlobalAudioPlayer from "src/Components/GlobalAudioPlayer";
+import Home from "src/pages/Home";
+import NavBar from "src/components/Nav";
+import Library from "src/pages/Library";
+import GlobalAudioPlayer from "src/components/GlobalAudioPlayer";
 
 const Layout = () => {
   const location = useLocation();

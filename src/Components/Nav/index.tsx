@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import Line from "../Line";
 import * as S from "./style";
-import { useScreenWidth } from "src/Hooks/useScreenWidth";
+import { useScreenWidth } from "src/hooks/useScreenWidth";
 import { useEffect, useRef, useState } from "react";
 
 const NavBar = () => {

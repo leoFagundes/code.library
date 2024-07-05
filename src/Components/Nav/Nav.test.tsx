@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import NavBar from ".";
 import { MemoryRouter } from "react-router-dom";
-import { useScreenWidth } from "src/Hooks/useScreenWidth";
+import { useScreenWidth } from "src/hooks/useScreenWidth";
 
 jest.mock("src/Hooks/useScreenWidth");
 

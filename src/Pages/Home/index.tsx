@@ -1,9 +1,9 @@
 import * as S from "./style";
-import Audio from "src/Components/Audio";
-import lofiAudioData from "src/Data/lofiAudioData";
-import lofiVideoData from "src/Data/lofiVideoData";
-import Video from "src/Components/Video";
-import { useScreenWidth } from "src/Hooks/useScreenWidth";
+import Audio from "src/components/Audio";
+import lofiAudioData from "src/data/lofiAudioData";
+import lofiVideoData from "src/data/lofiVideoData";
+import Video from "src/components/Video";
+import { useScreenWidth } from "src/hooks/useScreenWidth";
 
 const Home = () => {
   const { isSmallScreen } = useScreenWidth();
