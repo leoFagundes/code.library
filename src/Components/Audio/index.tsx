@@ -182,7 +182,7 @@ const Audio = ({ data, controls = true }: AudioProps) => {
     <S.AudioContainer
       data-testid={"audio-element"}
       issmallscreen={isSmallScreen ? "true" : "false"}
-      isControls={controls ? "true" : "false"}
+      iscontrols={controls ? "true" : "false"}
       className={`${
         isControlsManageAlreadyClicked
           ? isControlsVisible

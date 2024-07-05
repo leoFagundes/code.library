@@ -2,8 +2,8 @@ import Router from "./routes/routes";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme/theme";
 import GlobalStyle from "./GlobalStyle";
-import { useAudioContext } from "./contexts/AudioContext";
 import { useScreenWidth } from "./hooks/useScreenWidth";
+import { useAudioContext } from "./contexts/AudioContext";
 
 const App = () => {
   const { isPlaying, isGrayScaleWhenPaused } = useAudioContext();
