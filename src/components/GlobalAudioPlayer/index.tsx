@@ -30,6 +30,7 @@ const GlobalAudioPlayer = () => {
 
   return (
     <S.GlobalAudioContainer
+      data-testid="global-audio"
       $isPlaying={isPlaying}
       $isSmallScreen={isSmallScreen}
       className={`${
@@ -41,6 +42,7 @@ const GlobalAudioPlayer = () => {
       }`}
     >
       <FontAwesomeIcon
+        data-testid="icon"
         onClick={handleIconClick}
         className={`headphone-ico`}
         icon={faHeadphonesSimple}

@@ -261,8 +261,7 @@ const Audio = ({ data, controls = true }: AudioProps) => {
         </div>
       </div>
       <p className="current-track">
-        {filteredData()[currentTrackIndex].title} | Categoria:{" "}
-        {filteredCategoryOption}
+        {filteredData()[currentTrackIndex].title} | {filteredCategoryOption}
       </p>
       {controls && (
         <div className="controls-container">

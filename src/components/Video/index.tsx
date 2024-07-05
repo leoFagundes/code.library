@@ -41,6 +41,7 @@ const Video = ({ data }: VideoProps) => {
       }
     >
       <ReactPlayer
+        data-testid={"video"}
         url={`assets/videos/${lofiVideoName}.mp4`}
         controls={false}
         muted
