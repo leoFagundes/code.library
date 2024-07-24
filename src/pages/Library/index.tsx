@@ -2,9 +2,9 @@ import * as S from "./style";
 
 const Library = () => {
   return (
-    <S.sectionLibraryContainer>
+    <S.LibraryContainer>
       <></>
-    </S.sectionLibraryContainer>
+    </S.LibraryContainer>
   );
 };
 

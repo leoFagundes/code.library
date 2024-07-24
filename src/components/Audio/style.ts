@@ -52,19 +52,6 @@ export const AudioContainer = styled.div<AudioProps>`
     right: 10px;
     z-index: 2;
 
-    .dropdown-select {
-      display: flex;
-      justify-content: center;
-      border: none;
-      padding: 2px;
-      background: ${({ theme }) => theme.primaryRadialGradientBackground};
-      color: ${({ theme }) => theme.textColor};
-
-      option {
-        font-size: 12px;
-      }
-    }
-
     .controls-manage-icon {
       transform: rotate(180deg);
 
@@ -305,7 +292,7 @@ export const AudioContainer = styled.div<AudioProps>`
 
   @keyframes heightUpLarge {
     from {
-      height: 105px;
+      height: 115px;
     }
     to {
       height: 40px;
@@ -317,7 +304,7 @@ export const AudioContainer = styled.div<AudioProps>`
       height: 40px;
     }
     to {
-      height: 105px;
+      height: 115px;
     }
   }
 

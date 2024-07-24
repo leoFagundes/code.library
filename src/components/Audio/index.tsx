@@ -91,7 +91,8 @@ const Audio = ({ data, controls = true }: AudioProps) => {
       setCurrentVolume(savedCurrentVolume);
 
       if (audioRef.current && audioRef.current.audioEl.current) {
-        audioRef.current.audioEl.current.currentTime = savedTime;
+        const audioElement = audioRef.current.audioEl.current;
+        audioElement.currentTime = savedTime;
       }
     }
   }, [

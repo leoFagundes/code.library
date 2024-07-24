@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const sectionLibraryContainer = styled.section`
+export const LibraryContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -9,10 +9,10 @@ const Home = () => {
   const { isSmallScreen } = useScreenWidth();
 
   return (
-    <S.sectionHomeContainer>
+    <S.HomeContainer>
       {isSmallScreen ? <h2>Code.Library</h2> : <Video data={lofiVideoData} />}
       <Audio data={lofiAudioData} />
-    </S.sectionHomeContainer>
+    </S.HomeContainer>
   );
 };
 
