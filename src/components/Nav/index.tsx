@@ -46,7 +46,7 @@ const NavBar = () => {
         }`}
       >
         <h2>
-          <Link to={"/"}>Code.Library</Link>
+          <Link to={"/?animation=false"}>Code.Library</Link>
         </h2>
         <ul>
           <li>
@@ -61,7 +61,7 @@ const NavBar = () => {
     <>
       <nav data-testid="nav-bar" className="desktop-layout">
         <h2>
-          <Link to={"/"}>Code.Library</Link>
+          <Link to={"/?animation=false"}>Code.Library</Link>
         </h2>
         <ul>
           <li>
