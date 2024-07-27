@@ -19,7 +19,7 @@ export const HomeContainer = styled.section<{ isSmallScreen: boolean }>`
     height: 100vh;
     background-color: ${({ theme }) => theme.primaryColor};
     z-index: 10;
-    animation: shade-out 5s ease 2s forwards;
+    animation: shade-out-disabled 5s ease 2s forwards;
 
     .logo-animation-content {
       display: flex;
@@ -32,6 +32,7 @@ export const HomeContainer = styled.section<{ isSmallScreen: boolean }>`
 
       svg {
         scale: ${(props) => (props.isSmallScreen ? "0.8;" : "1.2")};
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
       }
 
       #Code-Library {
@@ -136,7 +137,7 @@ export const HomeContainer = styled.section<{ isSmallScreen: boolean }>`
     }
   }
 
-  @keyframes shade-out {
+  @keyframes shade-out-disabled {
     0%,
     75% {
       display: flex;
