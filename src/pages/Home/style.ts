@@ -19,7 +19,7 @@ export const HomeContainer = styled.section<{ isSmallScreen: boolean }>`
     height: 100vh;
     background-color: ${({ theme }) => theme.primaryColor};
     z-index: 10;
-    animation: shade-out-disabled 5s ease 2s forwards;
+    animation: shade-out-disabled 3.5s ease 2s forwards;
 
     .logo-animation-content {
       display: flex;
@@ -45,52 +45,52 @@ export const HomeContainer = styled.section<{ isSmallScreen: boolean }>`
         }
 
         #c {
-          animation: text-animation 2s ease 0s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 0s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #o {
-          animation: text-animation 2s ease 0.2s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 0.2s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #d {
-          animation: text-animation 2s ease 0.4s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 0.4s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #e {
-          animation: text-animation 2s ease 0.6s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 0.6s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #dot {
-          animation: text-animation 2s ease 0.8s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 0.8s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #l {
-          animation: text-animation 2s ease 1s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 1s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #i {
-          animation: text-animation 2s ease 1.2s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 1.2s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #b {
-          animation: text-animation 2s ease 1.4s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 1.4s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #r1 {
-          animation: text-animation 2s ease 1.6s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 1.6s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #a {
-          animation: text-animation 2s ease 1.7s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 1.7s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #r2 {
-          animation: text-animation 2s ease 1.8s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 1.8s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
         #y {
-          animation: text-animation 2s ease 2s forwards,
-            text-fill-sahdeOut 2s ease 4s forwards;
+          animation: text-animation 1.5s ease 2s forwards,
+            text-fill-sahdeOut 1.2s ease 3.5s forwards;
         }
       }
     }
